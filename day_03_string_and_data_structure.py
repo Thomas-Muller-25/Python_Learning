@@ -144,16 +144,17 @@ import sys
 
 # 设计一个函数返回给定文件名的后缀名。
 def get_suffix(file_name, has_dot=False):
-   pos = 0
-   for i in range(len(file_name)):
-       if file_name[i] == '.':
-           pos = i
-   # '.' 不是第一个或者最后一个字符
-   if 0 < pos < len(file_name) - 1:
-       index = pos if has_dot else  pos + 1
-       return file_name[index:]
-   else:
-       return ''
+    pos = 0
+    for i in range(len(file_name)):
+        if file_name[i] == '.':
+            pos = i
+    # '.' 不是第一个或者最后一个字符
+    if 0 < pos < len(file_name) - 1:
+        index = pos if has_dot else pos + 1
+        return file_name[index:]
+    else:
+        return ''
+
 
 # def get_suffix(file_name, has_dot = False):
 #     pos = file_name.rfind('.')
@@ -167,24 +168,143 @@ def get_suffix(file_name, has_dot=False):
 # print(get_suffix('test_module.py', True))
 
 # 练习4：设计一个函数返回传入的列表中最大和第二大的元素的值。
-def max2(x):
-    if len(x) < 2:
-        return 'Error, too short'
-    m1, m2 = (x[0], x[1]) if x[0] > x[1] else (x[1], x[0])
-    for index in range(2, len(x)):
-        if x[index] > m1:
-            m2 = m1
-            m1 = x[index]
-        elif x[index] > m2:
-            m2 =x[index]
-    return m1, m2
-
-
-x = [random.randint(0, 10) for _ in range(10)]
-print(x)
-print(max2(x))
+# def max2(x):
+#     if len(x) < 2:
+#         return 'Error, too short'
+#     m1, m2 = (x[0], x[1]) if x[0] > x[1] else (x[1], x[0])
+#     for index in range(2, len(x)):
+#         if x[index] > m1:
+#             m2 = m1
+#             m1 = x[index]
+#         elif x[index] > m2:
+#             m2 =x[index]
+#     return m1, m2
+#
+#
+# x = [random.randint(0, 10) for _ in range(10)]
+# print(x)
+# print(max2(x))
 
 
 # 练习5：计算指定的年月日是这一年的第几天。
+# def is_leap(year):
+#     if year < 0:
+#         raise Exception("Input year must > 0")
+#     if year % 400 == 0 or  (year % 4 == 0 and year % 100 != 0):
+#         return True
+#     else:
+#         return False
 
-days = [31, 28, 31, 30, 31, ]
+# def is_leap_year(year):
+#     return year % 4 == 0 and year % 100 != 0 or year% 400 == 0
+#
+#
+# def days(year, month, day):
+#     total_day = 0
+#     days_of_month =[[31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+#                     [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]][is_leap_year(year)]
+#     for i in range(month - 1):
+#         total_day += days_of_month[i]
+#     return total_day + day
+#
+#
+# print(days(2024, 5, 17))
+
+# 打印杨辉三角
+# def yanghui_triangle(layer):
+#     yh = [[]] * layer  # [[], [], [], [], []]
+#     for i in range(layer):
+#         yh[i] = [None] * (i + 1)
+#
+#         for j in range(i+1):
+#             if j == 0 or j == i:
+#                 yh[i][j] = 1
+#             else:
+#                 yh[i][j] = yh[i - 1][j - 1] + yh[i - 1][j]
+#     print(yh)
+# yanghui_triangle(12)
+
+"""
+《幸运的基督徒》
+有15个基督徒和15个非基督徒在海上遇险，为了能让一部分人活下来不得不将其中15个人扔到海里面去，有个人想了个办法就是大家围成一个圈，由某个人开始从1报数，报到9的人就扔到海里面，他后面的人接着从1开始报数，报到9的人继续扔到海里面，直到扔掉15个人。由于上帝的保佑，15个基督徒都幸免于难，问这些人最开始是怎么站的，哪些位置是基督徒哪些位置是非基督徒。
+"""
+
+def joseph_problem():
+    num = [x for x in range(1, 31)]
+    tmp_ptr = 0 # 當前所指向的人的位置
+    count = 0 # 報數
+    while len(num) > 15:
+        count += 1
+        tmp_ptr %= len(num)
+        if count % 9 == 0:
+            num.pop(tmp_ptr)
+            count = 0
+            continue
+        tmp_ptr += 1
+    return num
+
+
+print(joseph_problem())
+
+
+#
+# def main():
+#     persons = [True] * 30
+#     counter, index, number = 0, 0, 0
+#     while counter < 15:
+#         if persons[index]:
+#             number += 1
+#             if number == 9:
+#                 persons[index] = False
+#                 counter += 1
+#                 number = 0
+#         index += 1
+#         index %= 30
+#     for person in persons:
+#         print('基' if person else '非', end='')
+#
+#
+# if __name__ == '__main__':
+#     main()
+# import os
+
+
+# def print_board(board):
+#     print(board['TL'] + '|' + board['TM'] + '|' + board['TR'])
+#     print('-+-+-')
+#     print(board['ML'] + '|' + board['MM'] + '|' + board['MR'])
+#     print('-+-+-')
+#     print(board['BL'] + '|' + board['BM'] + '|' + board['BR'])
+#
+#
+# def main():
+#     init_board = {
+#         'TL': ' ', 'TM': ' ', 'TR': ' ',
+#         'ML': ' ', 'MM': ' ', 'MR': ' ',
+#         'BL': ' ', 'BM': ' ', 'BR': ' '
+#     }
+#     begin = True
+#     while begin:
+#         curr_board = init_board.copy()
+#         begin = False
+#         turn = 'x'
+#         counter = 0
+#         os.system('clear')
+#         print_board(curr_board)
+#         while counter < 9:
+#             move = input('轮到%s走棋, 请输入位置: ' % turn)
+#             if curr_board[move] == ' ':
+#                 counter += 1
+#                 curr_board[move] = turn
+#                 if turn == 'x':
+#                     turn = 'o'
+#                 else:
+#                     turn = 'x'
+#             os.system('clear')
+#             print_board(curr_board)
+#         choice = input('再玩一局?(yes|no)')
+#         begin = choice == 'yes'
+#
+#
+# if __name__ == '__main__':
+#     main()
